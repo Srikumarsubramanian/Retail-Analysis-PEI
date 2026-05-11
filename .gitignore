@@ -1,35 +1,85 @@
-# ── Python ────────────────────────────────────
+# ----------------------
+# Python basics
+# ----------------------
 __pycache__/
 *.py[cod]
-*.egg-info/
-dist/
-build/
+*.pyo
+*.pyd
+*.so
 
-# ── Virtual environment ──────────────────────
+# Virtual environments
+.venv/
 venv/
+env/
 
-# ── IDE / Editor ─────────────────────────────
+# ----------------------
+# Build / packaging
+# ----------------------
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ----------------------
+# Testing / coverage
+# ----------------------
+.coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+
+# ----------------------
+# Logs
+# ----------------------
+*.log
+
+# ----------------------
+# IDEs / editors
+# ----------------------
 .vscode/
 .idea/
 *.swp
+*.swo
 
-# ── Spark / Hadoop (local only) ──────────────
+# ----------------------
+# OS junk
+# ----------------------
+.DS_Store
+Thumbs.db
+
+# ----------------------
+# Databricks / Spark
+# ----------------------
+*.dbc
+.metastore_db/
 spark-warehouse/
-hadoop/
-derby.log
-metastore_db/
+roug
+# ----------------------
+# Jupyter / notebooks
+# ----------------------
+.ipynb_checkpoints/
 
-# ── Pipeline temp output ─────────────────────
+# ----------------------
+# Environment variables
+# ----------------------
+.env
+.env.*
+
+# ----------------------
+# Misc
+# ----------------------
+*.tmp
+*.bak
+
+# ----------------------
+# Pipeline output & artifacts
+# ----------------------
 temp/
-*.log
-
-# ── Scratch / test artifacts ─────────────────
 scratch/
-
-# ── Pytest ───────────────────────────────────
-.pytest_cache/
-
-# ── Local-only files (not for Databricks) ────
-src/databricks/utils/spark_session.py
-src/databricks/notebooks/rough.py
+hadoop/
 scripts/
+src/databricks/utils/spark_session.py
+
+pytest_errors.txt
+
+test_result.xml

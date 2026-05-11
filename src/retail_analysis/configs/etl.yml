@@ -9,6 +9,7 @@ etl_paths:
   bronze_path: "d:/PEI/retail-analysis/temp/delta/ecommerce/bronze"
   silver_path: "d:/PEI/retail-analysis/temp/delta/ecommerce/silver"
   gold_path:   "d:/PEI/retail-analysis/temp/delta/ecommerce/gold"
+  
 
 
 files:
@@ -17,4 +18,5 @@ files:
   customer.xlsx:
     partition_cols: ['Country']
   orders.json:
-    partition_cols: ['date']
+
+

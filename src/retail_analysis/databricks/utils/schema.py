@@ -75,12 +75,10 @@ MASTER_ORDERS_SCHEMA = StructType([
 ])
 
 PROFIT_AGGREGATE_SCHEMA = StructType([
-    StructField("order_year",        IntegerType(), False),
-    StructField("category",          StringType(),  False),
-    StructField("customer_id",       StringType(),  False),
-    StructField("customer_name",     StringType(),  True),
-    StructField("country",           StringType(),  True),
-    StructField("region",            StringType(),  True),
+    StructField("order_year",        IntegerType(), True),
+    StructField("category",          StringType(),  True),
+    StructField("customer_id",       StringType(),  True),
+    StructField("sub_category",      StringType(),  True),
     StructField("total_profit",      DoubleType(),  True),
     StructField("total_revenue",     DoubleType(),  True),
     StructField("_updated_at",       TimestampType(), True),
