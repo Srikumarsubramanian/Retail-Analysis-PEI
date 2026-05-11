@@ -1,0 +1,20 @@
+# ─────────────────────────────────────────────────────────
+# Retail Analysis Pipeline — ETL Configuration
+# ─────────────────────────────────────────────────────────
+# Override any path below via environment variables:
+#   PIPELINE_SOURCE_PATH, PIPELINE_BRONZE_PATH, etc.
+
+etl_paths:
+  source_path: "d:/PEI/retail-analysis/temp/source"
+  bronze_path: "d:/PEI/retail-analysis/temp/delta/ecommerce/bronze"
+  silver_path: "d:/PEI/retail-analysis/temp/delta/ecommerce/silver"
+  gold_path:   "d:/PEI/retail-analysis/temp/delta/ecommerce/gold"
+
+
+files:
+  products.csv:
+    partition_cols: ['category']
+  customer.xlsx:
+    partition_cols: ['Country']
+  orders.json:
+    partition_cols: ['date']

@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "retail-analysis"
+version = "0.1.0"
+description = "Retail analysis Databricks pipelines"
+requires-python = ">=3.11"
+dependencies = [
+    "pyspark",
+    "pyyaml",
+    "pandas",
+    "s3fs",
+    "openpyxl",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==8.2.0",
+    "black==24.4.0",
+    "flake8==7.0.0",
+    "mypy==1.10.0",
+    "pyspark==3.4.1",
+    "delta-spark",
+    "dbutils",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = "."
+markers = [
+    "unit: Pure unit tests (no disk I/O, fast)",
+    "integration: Tests that perform real Spark reads/writes",
+    "edge: Edge-case and boundary-condition tests",
+    "failure: Tests that are expected to fail",
+    "valid: Tests that are expected to pass",
+]

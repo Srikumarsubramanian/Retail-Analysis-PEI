@@ -1,0 +1,35 @@
+# ── Python ────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# ── Virtual environment ──────────────────────
+venv/
+
+# ── IDE / Editor ─────────────────────────────
+.vscode/
+.idea/
+*.swp
+
+# ── Spark / Hadoop (local only) ──────────────
+spark-warehouse/
+hadoop/
+derby.log
+metastore_db/
+
+# ── Pipeline temp output ─────────────────────
+temp/
+*.log
+
+# ── Scratch / test artifacts ─────────────────
+scratch/
+
+# ── Pytest ───────────────────────────────────
+.pytest_cache/
+
+# ── Local-only files (not for Databricks) ────
+src/databricks/utils/spark_session.py
+src/databricks/notebooks/rough.py
+scripts/
