@@ -216,6 +216,6 @@ def run_master_orders(spark: SparkSession) -> DataFrame:
 
 if __name__ == "__main__":
     #for local run
-    from retail_analysis.databricks.utils.spark_session import get_spark
-    spark = get_spark()
+    # from retail_analysis.databricks.utils.spark_session import get_spark
+    # spark = get_spark()
     run_master_orders(spark)
