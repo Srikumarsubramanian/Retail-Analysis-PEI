@@ -6,9 +6,10 @@ making them easy to unit-test without mocking.
 """
 
 import re
-from pyspark.sql import DataFrame
+from pyspark.sql import DataFrame , Column
 from pyspark.sql import functions as F
 from pyspark.sql.window import Window
+from pyspark.sql.types import DecimalType
 
 from retail_analysis.databricks.utils.custom_exceptions import TransformError
 from retail_analysis.databricks.utils.logger import get_logger
@@ -53,3 +54,37 @@ def add_ingestion_metadata(df: DataFrame) -> DataFrame:
     except Exception as e:
         log.exception("Failed to add ingestion metadata")
         raise TransformError("Failed to add ingestion metadata") from e
+
+
+
+def round_currency(
+    column: Column,
+    scale: int = 2,
+) -> Column:
+    """
+    Enterprise-grade rounding for financial columns.
+
+    Parameters
+    ----------
+    column : Column
+        Input numeric column
+    scale : int
+        Number of decimal places (default: 2)
+
+
+    Returns
+    -------
+    Column
+        Rounded column with Decimal precision
+    """
+    if not isinstance(column, Column):
+        raise TypeError("Input must be a PySpark Column")
+
+    try:                
+        # Apply rounding
+        rounded = F.round(column, scale)
+
+        return F.when(F.isnan(rounded), None).otherwise(rounded)
+    except Exception as e:
+        log.exception("Failed to round currency")
+        raise TransformError("Failed to round currency") from e

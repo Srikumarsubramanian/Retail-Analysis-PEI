@@ -53,7 +53,7 @@ Thumbs.db
 *.dbc
 .metastore_db/
 spark-warehouse/
-roug
+rough
 # ----------------------
 # Jupyter / notebooks
 # ----------------------

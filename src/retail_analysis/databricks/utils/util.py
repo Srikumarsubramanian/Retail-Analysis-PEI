@@ -190,6 +190,9 @@ def read_data(
             reader = reader.schema(schema)
         if fmt in ("csv", "json"):
             reader = reader.option("mode", mode)
+        if fmt == "json":
+            reader = reader.option("multiline", "true")
+            reader = reader.option("primitivesAsString", "true")
 
         # Enable corrupt-record capture for CSV/JSON in PERMISSIVE mode
         is_permissive = fmt in ("csv", "json") and mode.upper() == "PERMISSIVE"
@@ -496,6 +499,7 @@ def optimize_delta_zorder(
         log.info(f"Z-ORDER optimized {table_path} on {cols_sql}")
 
     return True
+
 
 
 

@@ -23,8 +23,8 @@ ORDERS_SCHEMA = StructType([
     StructField("quantity",    IntegerType(), True),
     StructField("price",       DoubleType(), True),
     StructField("discount",    DoubleType(), True),
-    StructField("profit",      DoubleType(), True),
-    StructField("_ingested_at",      TimestampType(), True),
+    StructField("profit",      DecimalType(18,6), True),
+    StructField("_ingested_at",TimestampType(), True),
 ])
 
 
@@ -55,21 +55,16 @@ MASTER_ORDERS_SCHEMA = StructType([
     StructField("customer_id",       StringType(), True),
     StructField("customer_name",     StringType(), True),
     StructField("country",           StringType(), True),
-    StructField("segment",           StringType(), True),
-    StructField("customer_city",     StringType(), True),
-    StructField("customer_state",    StringType(), True),
-    StructField("region",            StringType(), True),
+  
     
     StructField("product_id",        StringType(), True),
-    StructField("product_name",      StringType(), True),
     StructField("category",          StringType(), True),
     StructField("sub_category",      StringType(), True),
-    StructField("price_per_product", DoubleType(), True),
     
     StructField("quantity",          IntegerType(), True),
     StructField("order_price",       DoubleType(), True),
     StructField("discount",          DoubleType(), True),
-    StructField("profit",            DoubleType(), True),
+    StructField("profit",            DecimalType(18,2), True),
     StructField("total_revenue",DoubleType(), True),
     StructField("_updated_at",      TimestampType(), True),
 ])
@@ -79,7 +74,6 @@ PROFIT_AGGREGATE_SCHEMA = StructType([
     StructField("category",          StringType(),  True),
     StructField("customer_id",       StringType(),  True),
     StructField("sub_category",      StringType(),  True),
-    StructField("total_profit",      DoubleType(),  True),
-    StructField("total_revenue",     DoubleType(),  True),
+    StructField("total_profit",      DecimalType(18,2),  True),
     StructField("_updated_at",       TimestampType(), True),
 ])

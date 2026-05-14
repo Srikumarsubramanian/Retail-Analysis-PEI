@@ -14,9 +14,13 @@ def _configure_logging():
 
     root = logging.getLogger()
 
-    # Apply formatter to all existing handlers
-    for handler in root.handlers:
-        handler.setFormatter(fmt)
+    if not root.handlers:
+            handler = logging.StreamHandler()  # 👈 THIS is missing
+            handler.setFormatter(fmt)
+            root.addHandler(handler)
+    else:
+        for handler in root.handlers:
+            handler.setFormatter(fmt)
 
     root.setLevel(logging.INFO)
 
