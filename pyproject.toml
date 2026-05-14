@@ -43,5 +43,9 @@ markers = [
     "util: Tests for utils",
     "transforms: Tests for transforms",
     "master_pipeline: Tests for Master pipeline",
-    "schema: Tests for schema"
+    "schema: Tests for schema",
+    "unit: Tests for unit tests",
+    "edge: Tests for edge cases",
+    "negative: Tests for negative cases",
+    "positive: Tests for positive cases"
 ]

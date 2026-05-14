@@ -1,7 +1,6 @@
 import pytest
 from pyspark.sql import functions as F
-from pyspark.sql.types import DecimalType
-
+from pyspark.sql.types import StructType, StructField, DoubleType , DecimalType
 from retail_analysis.databricks.utils.transforms import round_currency
 from retail_analysis.databricks.utils.custom_exceptions import TransformError
 
@@ -52,7 +51,7 @@ def test_round_currency_positive(spark, value, expected):
     ],
 )
 def test_round_currency_edge(spark, value, expected):
-    from pyspark.sql.types import StructType, StructField, DoubleType
+    
 
     df = spark.createDataFrame(
         [(value,)],

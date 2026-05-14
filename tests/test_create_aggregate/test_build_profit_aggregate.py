@@ -1,9 +1,12 @@
 import pytest
 from retail_analysis.databricks.utils.custom_exceptions import TransformError
 from retail_analysis.databricks.notebooks import create_aggregate as agg
+from retail_analysis.databricks.notebooks.create_aggregate import build_profit_aggregate
 from unittest.mock import MagicMock
 
 from pyspark.sql.types import StructType, StructField, IntegerType, StringType, DoubleType
+from pyspark.sql import DataFrame
+
 
 def get_schema():
     return StructType([
@@ -16,6 +19,7 @@ def get_schema():
     ])
 
 @pytest.mark.unit
+@pytest.mark.positive
 def test_build_profit_aggregate_positive(spark):
     """
     Validate correct aggregation for a single group with positive values.
@@ -39,7 +43,7 @@ def test_build_profit_aggregate_positive(spark):
 
 
 @pytest.mark.unit
-@pytest.mark.edge
+@pytest.mark.positive
 def test_build_profit_aggregate_negative_mixed(spark):
     """
     Validate aggregation with mixed positive and negative profit values.
@@ -104,11 +108,11 @@ def test_build_profit_aggregate_empty(spark):
 
 
 @pytest.mark.gold
+@pytest.mark.unit
 def test_build_profit_aggregate_has_updated_at(spark):
     """
     Ensure _updated_at column is added.
     """
-    from retail_analysis.databricks.notebooks.create_aggregate import build_profit_aggregate
 
     df = spark.createDataFrame(
         [(2024, "Tech", "Phones", 1, 100.0, 500.0)],
@@ -122,6 +126,7 @@ def test_build_profit_aggregate_has_updated_at(spark):
 
 
 @pytest.mark.gold
+@pytest.mark.exception
 def test_build_profit_aggregate_failure(monkeypatch):
     """
     Ensure failures are wrapped as TransformError.
@@ -139,12 +144,12 @@ def test_build_profit_aggregate_failure(monkeypatch):
 
 
 @pytest.mark.gold
+@pytest.mark.unit
 def test_build_profit_aggregate_schema(spark):
     """
     Ensure output DataFrame has correct columns and type.
     """
-    from retail_analysis.databricks.notebooks.create_aggregate import build_profit_aggregate
-    from pyspark.sql import DataFrame
+    
 
     df = spark.createDataFrame(
         [(2024, "Tech", "Phones", 1, 100.0, 500.0)],

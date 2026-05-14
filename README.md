@@ -35,12 +35,12 @@ The pipeline follows the standard Medallion Architecture:
 │       ├── configs/              # etl configs , spark configs
 │       └── databricks/
 │           ├── notebooks/        # Pipeline orchestration and execution stages
-│           │   ├── ingestion.py
-│           │   ├── enrich_customers_products.py
-│           │   ├── master_orders.py
-│           │   ├── aggregate.py
-│           │   ├── kpis.py
-│           │   └── run_pipeline.py  # End-to-end orchestrator
+│           │   ├── create_raw_tables.py
+│           │   ├── create_enriched_customers_products.py
+│           │   ├── create_enriched_orders.py
+│           │   ├── create_aggregate.py
+│           │   ├── create_sql_kpis.py
+│           │   └── run_master_pipeline.py  # End-to-end orchestrator
 │           └── utils/            # Shared utilities (schema, DQ, transforms, logger)
 └── tests/                    # Comprehensive Pytest test suite (unit, edge cases)
 ```
@@ -79,19 +79,60 @@ The pipeline follows the standard Medallion Architecture:
 To execute the entire end-to-end pipeline (Bronze → Silver → Gold → Reporting):
 
 ```bash
-python -m src.retail_analysis.databricks.notebooks.run_pipeline
+python -m src.retail_analysis.databricks.notebooks.run_master_pipeline
 ```
+
+## Testing Suite
+
+The project features a comprehensive PySpark test suite using `pytest`, organized parallel to the application source code. It includes unit tests, boundary/edge case testing, and pipeline execution testing using mocked Spark DataFrames and Delta operations.
+
+### Test Structure
+
+```text
+tests/
+├── test_create_raw_tables/                  # Bronze layer ingestion tests
+├── test_create_enriched_customers_products/ # Silver layer enrichment tests
+├── test_create_enriched_orders/             # Gold layer master orders tests
+├── test_create_aggregate/                   # Gold layer aggregation tests
+├── test_create_sql_kpis/                    # KPI generation tests
+├── test_run_master_pipeline/                # End-to-end orchestrator tests
+└── test_others/                             # DQ, utility and schema tests
+```
+
+### Pytest Markers
+
+We use custom Pytest markers to categorize tests by layer and type:
+
+**Pipeline Layers:**
+- `@pytest.mark.ingestion` (Bronze)
+- `@pytest.mark.silver` (Silver)
+- `@pytest.mark.gold` (Gold)
+- `@pytest.mark.master_pipeline` (End-to-End Orchestration)
+
+**Component Types:**
+- `@pytest.mark.schema`
+- `@pytest.mark.util`
+- `@pytest.mark.transforms`
+
+**Test Case Categories:**
+- `@pytest.mark.unit` (Unit tests)
+- `@pytest.mark.positive` (Happy path validations)
+- `@pytest.mark.negative` (Failure and exception handling)
+- `@pytest.mark.edge` / `@pytest.mark.boundary` (Edge cases like nulls or schema issues)
 
 ### Running Tests
 
-The project uses `pytest` with custom markers for each layer of etl. 
-
-To run the complete test suite:
+To run the complete test suite with coverage:
 ```bash
-pytest tests/ -v
+pytest --cov=retail_analysis tests/ -v
 ```
 
-To run only specific markers:
+To run a specific pipeline layer:
 ```bash
-pytest -m unit -v
+pytest -m "gold" -v
+```
+
+To run specific test types (e.g., edge cases):
+```bash
+pytest -m "edge" -v
 ```
