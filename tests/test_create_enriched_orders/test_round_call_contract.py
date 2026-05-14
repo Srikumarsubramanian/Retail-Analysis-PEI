@@ -62,20 +62,16 @@ from retail_analysis.databricks.utils.custom_exceptions import TransformError
 
 
 @pytest.mark.unit
-def test_prepare_orders_raises_transform_error_on_failure(monkeypatch):
+def test_prepare_orders_raises_transform_error_on_failure(prepare_orders_setup):
     """
     Validate that _prepare_orders wraps internal errors
     into TransformError.
     """
+    s = prepare_orders_setup
 
-    df = MagicMock(name="orders_df")
+    s.df.withColumn.side_effect = Exception(" Some Error")
 
-    df.withColumn.side_effect = Exception(" Some Error")
-
-    mock_col = MagicMock()
-    monkeypatch.setattr(m.F, "col", MagicMock(return_value=mock_col))
-    monkeypatch.setattr(m.F, "to_date", MagicMock(return_value=mock_col))
 
     with pytest.raises(TransformError) as exc_info:
-        m._prepare_orders(df)
+        m._prepare_orders(s.df)
 
