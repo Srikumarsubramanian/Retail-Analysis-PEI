@@ -3,8 +3,8 @@ from types import SimpleNamespace
 from unittest.mock import MagicMock
 
 
-from retail_analysis.databricks.notebooks import create_enriched_customers_products as silver
-from retail_analysis.databricks.utils.custom_exceptions import DataQualityError, WriteError ,ReadError , TransformError,PipelineError
+from retail_analysis.databricks.notebooks.silver import create_enriched_customers_products as silver
+from retail_analysis.databricks.utils.setup_exceptions.custom_exceptions import DataQualityError, WriteError ,ReadError , TransformError,PipelineError
 
 
 @pytest.fixture()

@@ -2,7 +2,7 @@ import pytest
 from types import SimpleNamespace
 from unittest.mock import MagicMock
 
-from retail_analysis.databricks.notebooks import run_master_pipeline as pipe
+from retail_analysis.databricks.notebooks.orchestrators import run_master_pipeline as pipe
 
 
 @pytest.fixture()
@@ -22,19 +22,19 @@ def pipeline_setup(monkeypatch):
     monkeypatch.setattr(pipe, "log", log)
 
     monkeypatch.setattr(
-        "retail_analysis.databricks.notebooks.create_raw_tables.run_bronze", bronze
+        "retail_analysis.databricks.notebooks.bronze.create_raw_tables.run_bronze", bronze
     )
     monkeypatch.setattr(
-        "retail_analysis.databricks.notebooks.create_enriched_customers_products.run_silver", silver
+        "retail_analysis.databricks.notebooks.silver.create_enriched_customers_products.run_silver", silver
     )
     monkeypatch.setattr(
-        "retail_analysis.databricks.notebooks.create_enriched_orders.run_master_orders", master
+        "retail_analysis.databricks.notebooks.silver.create_enriched_orders.run_master_orders", master
     )
     monkeypatch.setattr(
-        "retail_analysis.databricks.notebooks.create_aggregate.run_profit_aggregate", aggregate
+        "retail_analysis.databricks.notebooks.gold.create_aggregate.run_profit_aggregate", aggregate
     )
     monkeypatch.setattr(
-        "retail_analysis.databricks.notebooks.create_sql_kpis.run_reporting", reporting
+        "retail_analysis.databricks.notebooks.gold.create_sql_kpis.run_reporting", reporting
     )
 
     return SimpleNamespace(

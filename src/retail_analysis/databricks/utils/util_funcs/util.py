@@ -14,9 +14,9 @@ from pyspark.sql import functions as F
 from pyspark.sql.types import StructType
 
 
-from retail_analysis.databricks.utils.custom_exceptions import ConfigError, DataQualityError, WriteError ,ReadError , TransformError,PipelineError
-from retail_analysis.databricks.utils.logger import get_logger
-from retail_analysis.databricks.utils.constants import QUARANTINE_PATH
+from retail_analysis.databricks.utils.setup_exceptions.custom_exceptions import ConfigError, DataQualityError, WriteError ,ReadError , TransformError,PipelineError
+from retail_analysis.databricks.utils.setup_logging.logger import get_logger
+from retail_analysis.templates.constants import QUARANTINE_PATH
 
 log = get_logger(__name__)
 
@@ -247,7 +247,7 @@ def enforce_schema(
     DataQualityError
         If any required column is missing from the DataFrame.
     """
-    from retail_analysis.databricks.utils.constants import SILVER_DELTA_PATH
+    from retail_analysis.templates.constants import SILVER_DELTA_PATH
     
     actual_cols = set(df.columns)
     missing = [f.name for f in expected_schema.fields if f.name not in actual_cols]

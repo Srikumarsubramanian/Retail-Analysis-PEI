@@ -1,7 +1,7 @@
 import pytest
-from retail_analysis.databricks.utils.custom_exceptions import TransformError
-from retail_analysis.databricks.notebooks import create_aggregate as agg
-from retail_analysis.databricks.notebooks.create_aggregate import build_profit_aggregate
+from retail_analysis.databricks.utils.setup_exceptions.custom_exceptions import TransformError
+from retail_analysis.databricks.notebooks.gold import create_aggregate as agg
+from retail_analysis.databricks.notebooks.gold.create_aggregate import build_profit_aggregate
 from unittest.mock import MagicMock
 
 from pyspark.sql.types import StructType, StructField, IntegerType, StringType, DoubleType

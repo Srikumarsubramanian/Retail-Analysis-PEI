@@ -3,10 +3,10 @@ from unittest.mock import patch, MagicMock
 from pyspark.sql import DataFrame
 from types import SimpleNamespace
 
-import retail_analysis.databricks.notebooks.create_raw_tables as ingestion
-from retail_analysis.databricks.notebooks.create_raw_tables import run_bronze
+from retail_analysis.databricks.notebooks.bronze import create_raw_tables as ingestion
+from retail_analysis.databricks.notebooks.bronze.create_raw_tables import run_bronze
 
-from retail_analysis.databricks.utils.custom_exceptions import ConfigError, TransformError , WriteError, ReadError, PipelineError 
+from retail_analysis.databricks.utils.setup_exceptions.custom_exceptions import ConfigError, TransformError , WriteError, ReadError, PipelineError 
 
 #-----------------------
 # fixtures

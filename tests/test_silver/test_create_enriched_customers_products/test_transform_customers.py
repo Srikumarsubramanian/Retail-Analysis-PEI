@@ -2,11 +2,11 @@ import pytest
 from types import SimpleNamespace
 from unittest.mock import MagicMock
 
-import retail_analysis.databricks.notebooks.create_enriched_customers_products as silver
+from retail_analysis.databricks.notebooks.silver import create_enriched_customers_products as silver
 from pyspark.sql.column import Column
 from pyspark.sql import DataFrame , functions as F
 from pyspark.sql import Row
-from retail_analysis.databricks.utils.schema import CUSTOMER_SCHEMA
+from retail_analysis.templates.schema import CUSTOMER_SCHEMA
 
 @pytest.fixture()
 def transform_customers_setup(monkeypatch):

@@ -33,7 +33,7 @@ def get_spark(app_name: str = "RetailAnalysis") -> SparkSession:
     # ── Windows: point to local Hadoop binaries ──────────
     if sys.platform == "win32":
         hadoop_home = os.path.abspath(
-            os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "hadoop")
+            os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "..", "hadoop")
         )
         os.environ.setdefault("HADOOP_HOME", hadoop_home)
 
@@ -88,6 +88,6 @@ def get_spark(app_name: str = "RetailAnalysis") -> SparkSession:
 def _log4j_path() -> str:
     """Resolve the log4j properties path relative to the project."""
     candidate = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "scripts", "log4j.properties")
+        os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "..", "scripts", "log4j.properties")
     )
     return candidate.replace("\\", "/")

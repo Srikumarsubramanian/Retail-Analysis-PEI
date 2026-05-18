@@ -3,9 +3,9 @@ from types import SimpleNamespace
 
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType
 
-from retail_analysis.databricks.utils.util import read_data, enforce_schema
-from retail_analysis.databricks.utils.custom_exceptions import ReadError, DataQualityError, WriteError
-from retail_analysis.databricks.utils.constants import QUARANTINE_PATH
+from retail_analysis.databricks.utils.util_funcs.util import read_data, enforce_schema
+from retail_analysis.databricks.utils.setup_exceptions.custom_exceptions import ReadError, DataQualityError, WriteError
+from retail_analysis.templates.constants import QUARANTINE_PATH
 
 
 # ─────────────────────────────────────────────

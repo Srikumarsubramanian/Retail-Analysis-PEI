@@ -3,7 +3,7 @@ from types import SimpleNamespace
 from unittest.mock import MagicMock
 from pyspark.sql import SparkSession
 
-from retail_analysis.databricks.notebooks import create_sql_kpis as rpt
+from retail_analysis.databricks.notebooks.gold import create_sql_kpis as rpt
 
 
 @pytest.fixture()

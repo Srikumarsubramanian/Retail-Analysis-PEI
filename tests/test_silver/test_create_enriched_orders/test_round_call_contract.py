@@ -3,8 +3,10 @@ import pytest
 from types import SimpleNamespace
 from unittest.mock import MagicMock
 
-import retail_analysis.databricks.notebooks.create_enriched_orders as m
+import retail_analysis.databricks.notebooks.silver.create_enriched_orders as m
 from pyspark.sql.column import Column
+
+from retail_analysis.databricks.utils.setup_exceptions.custom_exceptions import TransformError
 
 
 @pytest.fixture()
@@ -58,7 +60,6 @@ def test_prepare_orders_calls_round_currency(prepare_orders_setup):
 
 
 
-from retail_analysis.databricks.utils.custom_exceptions import TransformError
 
 
 @pytest.mark.unit

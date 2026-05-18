@@ -4,7 +4,7 @@ from types import SimpleNamespace
 from pyspark.sql import functions as F
 from pyspark.sql.types import StructType, StructField, StringType
 
-from retail_analysis.databricks.utils.dq import clean_customer_name, clean_email, clean_phone
+from retail_analysis.databricks.utils.util_funcs.dq import clean_customer_name, clean_email, clean_phone
 
 
 # ─────────────────────────────────────────────

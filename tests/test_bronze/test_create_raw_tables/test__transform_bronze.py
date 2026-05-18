@@ -2,8 +2,8 @@ import pytest
 from types import SimpleNamespace
 from unittest.mock import MagicMock
 from pyspark.sql import DataFrame
-from retail_analysis.databricks.utils.custom_exceptions import TransformError
-from retail_analysis.databricks.notebooks import create_raw_tables as ingestion
+from retail_analysis.databricks.utils.setup_exceptions.custom_exceptions import TransformError
+from retail_analysis.databricks.notebooks.bronze import create_raw_tables as ingestion
 
 
 @pytest.fixture

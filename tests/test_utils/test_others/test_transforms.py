@@ -1,7 +1,7 @@
 import pytest
 from types import SimpleNamespace
 
-from retail_analysis.databricks.utils.transforms import normalise_columns
+from retail_analysis.databricks.utils.util_funcs.transforms import normalise_columns
 
 
 # ─────────────────────────────────────────────

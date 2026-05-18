@@ -13,8 +13,8 @@ from typing import Any, Callable, Dict
 
 
 
-from retail_analysis.databricks.utils.logger import get_logger
-from retail_analysis.databricks.utils.custom_exceptions import PipelineError
+from retail_analysis.databricks.utils.setup_logging.logger import get_logger
+from retail_analysis.databricks.utils.setup_exceptions.custom_exceptions import PipelineError
 log = get_logger(__name__)
 
 def _run_stage(name: str, fn: Callable[..., Any], *args: Any) -> Any:
@@ -31,7 +31,7 @@ def _run_stage(name: str, fn: Callable[..., Any], *args: Any) -> Any:
         raise PipelineError(f"Pipeline failed at: {name} due to \n {e}") from e
 
 
-def run_pipeline(spark,config_path: str = "src/retail_analysis/configs/etl.yml") -> Dict[str, Any]:
+def run_pipeline(spark,config_path: str = "src\retail_analysis\templates\configs\etl.yml") -> Dict[str, Any]:
     """Execute the full medallion pipeline.
 
     Parameters
@@ -48,11 +48,11 @@ def run_pipeline(spark,config_path: str = "src/retail_analysis/configs/etl.yml")
     # load time fast when only a subset of stages is needed.
     try:
             
-        from retail_analysis.databricks.notebooks.create_raw_tables import run_bronze
-        from retail_analysis.databricks.notebooks.create_enriched_customers_products import run_silver
-        from retail_analysis.databricks.notebooks.create_enriched_orders import run_master_orders
-        from retail_analysis.databricks.notebooks.create_aggregate import run_profit_aggregate
-        from retail_analysis.databricks.notebooks.create_sql_kpis import run_reporting
+        from retail_analysis.databricks.notebooks.bronze.create_raw_tables import run_bronze
+        from retail_analysis.databricks.notebooks.silver.create_enriched_customers_products import run_silver
+        from retail_analysis.databricks.notebooks.silver.create_enriched_orders import run_master_orders
+        from retail_analysis.databricks.notebooks.gold.create_aggregate import run_profit_aggregate
+        from retail_analysis.databricks.notebooks.gold.create_sql_kpis import run_reporting
 
 
         results: Dict[str, Any] = {}
@@ -97,6 +97,7 @@ def run_pipeline(spark,config_path: str = "src/retail_analysis/configs/etl.yml")
 
 if __name__ == "__main__":
     ##for local run
-    # from retail_analysis.databricks.utils.spark_session import get_spark
-    # spark = get_spark()
-    run_pipeline(spark, 'src/retail_analysis/configs/etl.yml')
+    from retail_analysis.databricks.utils.util_funcs.spark_session import get_spark
+    spark = get_spark()
+    config_path = r"src/retail_analysis/templates/configs/etl.yml"
+    run_pipeline(spark, config_path)

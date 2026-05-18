@@ -2,7 +2,7 @@ import pytest
 from types import SimpleNamespace
 from unittest.mock import MagicMock
 
-from retail_analysis.databricks.notebooks import run_master_pipeline as pipe
+from retail_analysis.databricks.notebooks.orchestrators import run_master_pipeline as pipe
 
 
 @pytest.mark.master_pipeline

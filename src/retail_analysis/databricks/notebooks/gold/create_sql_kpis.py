@@ -12,11 +12,11 @@ from typing import Dict
 from pyspark.sql import DataFrame, SparkSession, Window
 from pyspark.sql import functions as F
 
-from retail_analysis.databricks.utils.constants import GOLD_DELTA_PATH
-from retail_analysis.databricks.utils.logger import get_logger
-from retail_analysis.databricks.utils.schema import PROFIT_AGGREGATE_SCHEMA
-from retail_analysis.databricks.utils.util import read_data, enforce_schema
-from retail_analysis.databricks.utils.custom_exceptions import ReportingError, KPIQueryError, ReadError, PipelineError
+from retail_analysis.templates.constants import GOLD_DELTA_PATH
+from retail_analysis.databricks.utils.setup_logging.logger import get_logger
+from retail_analysis.templates.schema import PROFIT_AGGREGATE_SCHEMA
+from retail_analysis.databricks.utils.util_funcs.util import read_data, enforce_schema
+from retail_analysis.databricks.utils.setup_exceptions.custom_exceptions import ReportingError, KPIQueryError, ReadError, PipelineError
 
 log = get_logger(__name__)
 

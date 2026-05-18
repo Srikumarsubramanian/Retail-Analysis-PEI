@@ -1,9 +1,9 @@
 import pytest
 from types import SimpleNamespace
 from unittest.mock import MagicMock
-from retail_analysis.databricks.utils.custom_exceptions import ReadError, TransformError
+from retail_analysis.databricks.utils.setup_exceptions.custom_exceptions import ReadError, TransformError
 
-import retail_analysis.databricks.notebooks.create_aggregate as agg
+import retail_analysis.databricks.notebooks.gold.create_aggregate as agg
 
 
 @pytest.fixture()
@@ -39,7 +39,7 @@ def test_read_master_orders_success(read_master_orders_setup):
 
     s.read.assert_called_once_with(
         s.spark,
-        agg.GOLD_DELTA_PATH,
+        agg.SILVER_DELTA_PATH,
         "master_orders",
         "delta",
     )
@@ -56,7 +56,7 @@ def test_read_master_orders_failure(read_master_orders_setup):
 
     s.read.side_effect = Exception("File not found")
 
-    with pytest.raises(agg.ReadError, match="Failed to read master orders"):
+    with pytest.raises(agg.PipelineError):
         agg._read_master_orders(s.spark)
 
     s.log.exception.assert_called_once_with("Failed to read master orders")

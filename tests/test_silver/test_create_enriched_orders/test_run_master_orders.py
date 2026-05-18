@@ -2,8 +2,8 @@ import pytest
 from types import SimpleNamespace
 from unittest.mock import MagicMock
 
-import retail_analysis.databricks.notebooks.create_enriched_orders as gold
-from retail_analysis.databricks.utils.custom_exceptions import PipelineError , ReadError , TransformError , WriteError
+import retail_analysis.databricks.notebooks.silver.create_enriched_orders as silver
+from retail_analysis.databricks.utils.setup_exceptions.custom_exceptions import PipelineError , ReadError , TransformError , WriteError
 
 @pytest.fixture()
 def run_master_orders_setup(monkeypatch):
@@ -23,9 +23,9 @@ def run_master_orders_setup(monkeypatch):
     build_master_orders = MagicMock(return_value=master_df)
     merge = MagicMock()
 
-    monkeypatch.setattr(gold, "_read_sources", read_sources)
-    monkeypatch.setattr(gold, "build_master_orders", build_master_orders)
-    monkeypatch.setattr(gold, "merge_delta_upsert", merge)
+    monkeypatch.setattr(silver, "_read_sources", read_sources)
+    monkeypatch.setattr(silver, "build_master_orders", build_master_orders)
+    monkeypatch.setattr(silver, "merge_delta_upsert", merge)
 
     return SimpleNamespace(
         spark=spark,
@@ -39,7 +39,7 @@ def run_master_orders_setup(monkeypatch):
     )
 
 
-@pytest.mark.gold
+@pytest.mark.silver
 def test_run_master_orders_success(run_master_orders_setup):
     """
     Validate orchestration flow for building master orders.
@@ -53,7 +53,7 @@ def test_run_master_orders_success(run_master_orders_setup):
     """
     s = run_master_orders_setup
 
-    result = gold.run_master_orders(s.spark)
+    result = silver.run_master_orders(s.spark)
 
     assert result == s.master_df
 
@@ -72,13 +72,13 @@ def test_run_master_orders_success(run_master_orders_setup):
         s.spark,
         s.master_df,
         "master_orders",
-        gold.GOLD_DELTA_PATH,
+        silver.SILVER_DELTA_PATH,
         merge_keys=["order_id", "product_id"],
         partition_cols=["order_year"],
     )
 
 
-@pytest.mark.gold
+@pytest.mark.silver
 @pytest.mark.parametrize(
     "failure_target",
     [
@@ -107,4 +107,4 @@ def test_run_master_orders_failure(run_master_orders_setup, failure_target):
         s.merge.side_effect = WriteError("Error merging master orders table")
 
     with pytest.raises(PipelineError, match="Error building master orders table"):
-        gold.run_master_orders(s.spark)
+        silver.run_master_orders(s.spark)

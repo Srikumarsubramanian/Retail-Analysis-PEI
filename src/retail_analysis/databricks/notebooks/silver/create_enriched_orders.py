@@ -1,5 +1,5 @@
 """
-Gold Layer — Master Orders
+Silver Layer — Master Orders
 ==========================
 Joins Bronze orders with Silver dimension tables (customers, products)
 to produce a fully enriched, analytics-ready master table.
@@ -16,16 +16,16 @@ from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql import functions as F
 
 
-from retail_analysis.databricks.utils.constants import (
+from retail_analysis.templates.constants import (
     BRONZE_DELTA_PATH,
     SILVER_DELTA_PATH,
     GOLD_DELTA_PATH,
 )
-from retail_analysis.databricks.utils.logger import get_logger
-from retail_analysis.databricks.utils.schema import ORDERS_SCHEMA, CUSTOMER_SCHEMA, PRODUCTS_SCHEMA
-from retail_analysis.databricks.utils.util import read_data, merge_delta_upsert, enforce_schema, optimize_delta_zorder
-from retail_analysis.databricks.utils.transforms import round_currency
-from retail_analysis.databricks.utils.custom_exceptions import PipelineError, ReadError, WriteError, TransformError
+from retail_analysis.databricks.utils.setup_logging.logger import get_logger
+from retail_analysis.templates.schema import ORDERS_SCHEMA, CUSTOMER_SCHEMA, PRODUCTS_SCHEMA
+from retail_analysis.databricks.utils.util_funcs.util import read_data, merge_delta_upsert, enforce_schema, optimize_delta_zorder
+from retail_analysis.databricks.utils.util_funcs.transforms import round_currency
+from retail_analysis.databricks.utils.setup_exceptions.custom_exceptions import PipelineError, ReadError, WriteError, TransformError
 
 log = get_logger(__name__)
 
@@ -189,7 +189,7 @@ def run_master_orders(spark: SparkSession) -> DataFrame:
             spark, 
             master_orders, 
             "master_orders", 
-            GOLD_DELTA_PATH, 
+            SILVER_DELTA_PATH, 
             merge_keys=["order_id", "product_id"],
             partition_cols=["order_year"]
         )
@@ -197,13 +197,13 @@ def run_master_orders(spark: SparkSession) -> DataFrame:
         # Optimize with Z-Order for downstream aggregation reads
         optimize_delta_zorder(
             spark,
-            GOLD_DELTA_PATH,
+            SILVER_DELTA_PATH,
             "master_orders",
             ["customer_id", "product_id"],
             log
         )
         
-        log.info(f"Successfully built master orders table and saved to {GOLD_DELTA_PATH}/master_orders")
+        log.info(f"Successfully built master orders table and saved to {SILVER_DELTA_PATH}/master_orders")
         return master_orders
     except Exception as e:
         log.exception(f"Error building master orders table")

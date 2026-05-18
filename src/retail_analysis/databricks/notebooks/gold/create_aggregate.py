@@ -16,11 +16,11 @@ from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.types import TimestampType
 
-from retail_analysis.databricks.utils.constants import GOLD_DELTA_PATH
-from retail_analysis.databricks.utils.logger import get_logger
-from retail_analysis.databricks.utils.schema import MASTER_ORDERS_SCHEMA
-from retail_analysis.databricks.utils.util import read_data, enforce_schema, merge_delta_upsert,optimize_delta_zorder 
-from retail_analysis.databricks.utils.custom_exceptions import ReadError,TransformError , PipelineError
+from retail_analysis.templates.constants import GOLD_DELTA_PATH , SILVER_DELTA_PATH
+from retail_analysis.databricks.utils.setup_logging.logger import get_logger
+from retail_analysis.templates.schema import MASTER_ORDERS_SCHEMA
+from retail_analysis.databricks.utils.util_funcs.util import read_data, enforce_schema, merge_delta_upsert,optimize_delta_zorder 
+from retail_analysis.databricks.utils.setup_exceptions.custom_exceptions import ReadError,TransformError , PipelineError
 
 
 log = get_logger(__name__)
@@ -34,10 +34,10 @@ log = get_logger(__name__)
 # Read
 # ---------------------------------------------
 def _read_master_orders(spark: SparkSession) -> DataFrame:
-    """Read the gold-layer master orders table."""
-    log.info(f"Reading master orders from {GOLD_DELTA_PATH}/master_orders")
+    """Read the silver-layer master orders table."""
+    log.info(f"Reading master orders from {SILVER_DELTA_PATH}/master_orders")
     try:
-        df = read_data(spark, GOLD_DELTA_PATH,"master_orders","delta")
+        df = read_data(spark, SILVER_DELTA_PATH,"master_orders","delta")
     except Exception as e:
         log.exception("Failed to read master orders")
         raise ReadError("Failed to read master orders")  from e

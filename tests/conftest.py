@@ -1,5 +1,5 @@
 import pytest
-from retail_analysis.databricks.utils.spark_session import get_spark
+from retail_analysis.databricks.utils.util_funcs.spark_session import get_spark
 
 @pytest.fixture(scope="session")
 def spark():

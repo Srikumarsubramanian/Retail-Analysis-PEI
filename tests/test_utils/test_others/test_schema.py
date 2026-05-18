@@ -1,13 +1,13 @@
 import pytest
-
-from retail_analysis.databricks.utils.schema import (
+from pyspark.sql.types import StructType
+from retail_analysis.templates.schema import (
     PRODUCTS_SCHEMA,
     ORDERS_SCHEMA,
     CUSTOMER_SCHEMA,
     MASTER_ORDERS_SCHEMA,
     PROFIT_AGGREGATE_SCHEMA,
 )
-from pyspark.sql.types import StructType
+
 
 
 @pytest.fixture

@@ -2,7 +2,7 @@
 Data Cleaning and Validation Utilities
 """
 
-from retail_analysis.databricks.utils.custom_exceptions import DataQualityError,PipelineError
+from retail_analysis.databricks.utils.setup_exceptions.custom_exceptions import DataQualityError,PipelineError
 
 __all__ = [
     "clean_customer_name",
@@ -17,8 +17,8 @@ from pyspark.sql import DataFrame
 from pyspark.sql import functions as F
 from pyspark.sql.column import Column
 
-from retail_analysis.databricks.utils.logger import get_logger
-from retail_analysis.databricks.utils.constants import EMAIL_PATTERN
+from retail_analysis.databricks.utils.setup_logging.logger import get_logger
+from retail_analysis.templates.constants import EMAIL_PATTERN
 
 log = get_logger(__name__)
 

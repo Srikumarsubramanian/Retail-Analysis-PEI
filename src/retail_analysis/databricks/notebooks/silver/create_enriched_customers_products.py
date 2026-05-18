@@ -15,15 +15,15 @@ from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.types import DoubleType
 
-from retail_analysis.databricks.utils.constants import (
+from retail_analysis.templates.constants import (
     BRONZE_DELTA_PATH,
     SILVER_DELTA_PATH,
 )
-from retail_analysis.databricks.utils.logger import get_logger
-from retail_analysis.databricks.utils.schema import PRODUCTS_SCHEMA, CUSTOMER_SCHEMA
-from retail_analysis.databricks.utils.util import read_data, write_delta_table, merge_delta_upsert,enforce_schema
-from retail_analysis.databricks.utils.dq import clean_customer_name, clean_phone, clean_email
-from retail_analysis.databricks.utils.custom_exceptions import TransformError , ReadError, PipelineError
+from retail_analysis.databricks.utils.setup_logging.logger import get_logger
+from retail_analysis.templates.schema import PRODUCTS_SCHEMA, CUSTOMER_SCHEMA
+from retail_analysis.databricks.utils.util_funcs.util import read_data, write_delta_table, merge_delta_upsert,enforce_schema
+from retail_analysis.databricks.utils.util_funcs.dq import clean_customer_name, clean_phone, clean_email
+from retail_analysis.databricks.utils.setup_exceptions.custom_exceptions import TransformError , ReadError, PipelineError
 
 
 
@@ -232,6 +232,6 @@ def run_silver(spark: SparkSession) -> Dict[str, DataFrame]:
 # ---------------------------------------------
 if __name__ == "__main__":
     ##for local run
-    # from retail_analysis.databricks.utils.spark_session import get_spark
-    # spark = get_spark()
+    from retail_analysis.databricks.utils.spark_session import get_spark
+    spark = get_spark()
     run_silver(spark)

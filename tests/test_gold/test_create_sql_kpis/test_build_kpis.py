@@ -2,8 +2,8 @@ import pytest
 from types import SimpleNamespace
 from unittest.mock import MagicMock
 
-from retail_analysis.databricks.notebooks import create_sql_kpis as rpt
-from retail_analysis.databricks.utils.custom_exceptions import KPIQueryError
+from retail_analysis.databricks.notebooks.gold import create_sql_kpis as rpt
+from retail_analysis.databricks.utils.setup_exceptions.custom_exceptions import KPIQueryError
 
 
 @pytest.fixture()

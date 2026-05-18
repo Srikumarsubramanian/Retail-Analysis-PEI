@@ -2,7 +2,7 @@ import pytest
 from types import SimpleNamespace
 from unittest.mock import MagicMock
 
-from retail_analysis.databricks.notebooks import create_aggregate as agg
+from retail_analysis.databricks.notebooks.gold import create_aggregate as agg
 
 
 @pytest.fixture()

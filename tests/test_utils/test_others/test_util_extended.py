@@ -2,9 +2,9 @@ import pytest
 from types import SimpleNamespace
 from unittest.mock import MagicMock
 
-from retail_analysis.databricks.utils.util import load_and_validate_config, write_delta_table
-from retail_analysis.databricks.utils.custom_exceptions import ConfigError, WriteError
-import retail_analysis.databricks.utils.util as util
+from retail_analysis.databricks.utils.util_funcs.util import load_and_validate_config, write_delta_table
+from retail_analysis.databricks.utils.setup_exceptions.custom_exceptions import ConfigError, WriteError
+import retail_analysis.databricks.utils.util_funcs.util as util
 
 
 # ─────────────────────────────────────────────

@@ -2,7 +2,7 @@ import pytest
 from types import SimpleNamespace
 from unittest.mock import MagicMock
 
-import retail_analysis.databricks.notebooks.create_enriched_customers_products as silver
+import retail_analysis.databricks.notebooks.silver.create_enriched_customers_products as silver
 
 
 @pytest.fixture()
@@ -35,7 +35,6 @@ def transform_products_setup(monkeypatch):
     
     
 
-import pytest
 
 
 @pytest.mark.transforms
@@ -86,7 +85,7 @@ def test_transform_products_values(spark, input_data, expected_output):
     - trimming + initcap applied
     - negative prices set to NULL
     """
-    from retail_analysis.databricks.notebooks.create_enriched_customers_products import transform_products
+    from retail_analysis.databricks.notebooks.silver.create_enriched_customers_products import transform_products
 
     columns = [
         "product_id",
