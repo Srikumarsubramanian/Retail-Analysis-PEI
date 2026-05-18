@@ -79,7 +79,7 @@ temp/
 scratch/
 hadoop/
 scripts/
-src/databricks/utils/spark_session.py
+spark_session.py
 
 pytest_errors.txt
 test_result.xml
