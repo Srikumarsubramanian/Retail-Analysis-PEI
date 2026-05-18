@@ -53,7 +53,8 @@ Thumbs.db
 *.dbc
 .metastore_db/
 spark-warehouse/
-rough
+rough.py
+sample_profit.json
 # ----------------------
 # Jupyter / notebooks
 # ----------------------
@@ -81,5 +82,4 @@ scripts/
 src/databricks/utils/spark_session.py
 
 pytest_errors.txt
-
 test_result.xml
